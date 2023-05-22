@@ -55,6 +55,5 @@ Please note that the exact steps to manually learn a model and create a runtime 
 
 <img width="703" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/9e37dbfd-de45-4a63-b3ea-1fc3835c1ecf">
 
-![Uploading image.png…]()
 
 

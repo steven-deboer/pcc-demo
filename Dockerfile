@@ -6,3 +6,6 @@ ADD pcc_demo.sh /
 
 # Make the script executable
 RUN chmod +x /pcc_demo.sh
+
+# Run a command that executes indefinitely
+CMD ["tail", "-f", "/dev/null"]

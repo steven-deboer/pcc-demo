@@ -24,13 +24,7 @@ This demo is designed to showcase the power of Prisma Cloud Compute's container 
 
 4. In Prisma Cloud Compute, create a runtime rule that alerts on any processes that deviate from the learned model. 
 
-5. Within the BusyBox container, create a new file named `pcc_demo.sh`. This will be the script that checks for potential security threats. Make the script executable with the following command:
-
-    ```shell
-    chmod +x pcc_demo.sh
-    ```
-
-6. Run the security check script:
+5. Within the container, run the demo script:
 
     ```shell
     ./pcc_demo.sh
@@ -40,7 +34,7 @@ This demo is designed to showcase the power of Prisma Cloud Compute's container 
 
     This demonstrates how the container runtime model works and how it can help protect against zero day attacks with just a single rule. 
 
-7. Now, let's change the effect of the rule from alerting to prevention. This means that any process outside of the model will not only trigger an alert, but also be stopped in its tracks.
+6. Now, let's change the effect of the rule from alerting to prevention. This means that any process outside of the model will not only trigger an alert, but also be stopped in its tracks.
 
 ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/2cb33915-d991-42ee-91d3-676d80817aff)
 

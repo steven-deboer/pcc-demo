@@ -2,22 +2,19 @@
 
 # Function for response based on command execution status
 terminal_response() {
-    echo -ne "\n"
     if [ "$1" -eq 0 ]; then
-        echo -e "\033[38;5;202m⚠️  I was able to execute this attack: $2. ⚠️\033[0m"
+        echo -e "\033[38;5;202m⚠️  I was able to execute this attack: $2 ⚠️\033[0m"
         if [ "$4" -eq 1 ]; then
             echo -e "\033[38;5;202mAttack output: \n$3\033[0m"
         fi
     else
-        echo -e "\033[38;5;34m✅  Prisma Cloud blocked this attack: $2. ✅\033[0m"
+        echo -e "\033[38;5;34m✅  Prisma Cloud blocked this attack: $2 ✅\033[0m"
     fi
-    sleep 2
+    echo -e "\n---------------------------------------------------------\n"
 }
 
 # Function to check /etc/passwd
 check_passwd() {
-    echo -e "\n\033[1;34m⚔️  Launching attack: Reading /etc/passwd\033[0m"
-    sleep 1
     cmd_output=$(cat /etc/passwd 2>&1)
     cmd_exit_status=$?
     terminal_response $cmd_exit_status "reading /etc/passwd" "$cmd_output" "$1"
@@ -25,11 +22,16 @@ check_passwd() {
 
 # Function to check whoami
 check_whoami() {
-    echo -e "\n\033[1;34m⚔️  Launching attack: Executing whoami\033[0m"
-    sleep 1
     cmd_output=$(whoami 2>&1)
     cmd_exit_status=$?
     terminal_response $cmd_exit_status "executing whoami" "$cmd_output" "$1"
+}
+
+# Function to download malware
+download_malware() {
+    cmd_output=$(wget http://wildfire.paloaltonetworks.com/publicapi/test/elf -O /tmp/malware-sample 2>&1)
+    cmd_exit_status=$?
+    terminal_response $cmd_exit_status "downloading malware" "$cmd_output" "$1"
 }
 
 # Check if verbose mode is enabled
@@ -41,25 +43,29 @@ fi
 
 while true; do
     printf "\033c"
-
-    # Top box line
     echo -e "\033[1;34m
     ╔════════════════════════════════════════════════════════════════════╗
-    ║      🚀   Starting Security Checks   🚀                            ║
+    ║                                                                    ║
+    ║       🚀   Welcome to the Security Checks tool   🚀                ║
+    ║                                                                    ║
+    ║   Please press any key to initiate the security checks. These      ║
+    ║   checks are designed to simulate potential security attacks and   ║
+    ║   to validate the effectiveness of our security measures.          ║
+    ║                                                                    ║
+    ║   Press 'q' to quit the application.                               ║
+    ║                                                                    ║
     ╚════════════════════════════════════════════════════════════════════╝
     \033[0m"
-
+    read -s -n 1 key
+    if [[ "$key" == "q" ]]; then
+        break
+    fi
     check_passwd $verbose_mode
     check_whoami $verbose_mode
-
-    # Progress bar
-    for i in $(seq 20 -1 1)
-    do
-        printf "\r["
-        for j in $(seq $i); do printf "#"; done
-        for j in $(seq $((80-i))); do printf " "; done
-        printf "] \033[1;32m$i\033[0m"
-        sleep 1
-    done
-    printf "\033[2K"
+    download_malware $verbose_mode
+    echo -e "\n\033[1;34mPress any key to restart the Security Checks, or 'q' to quit\033[0m"
+    read -s -n 1 key
+    if [[ "$key" == "q" ]]; then
+        break
+    fi
 done

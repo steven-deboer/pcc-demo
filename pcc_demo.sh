@@ -60,9 +60,13 @@ while true; do
     if [[ "$key" == "q" ]]; then
         break
     fi
+    sleep 1
     check_passwd $verbose_mode
+    sleep 1
     check_whoami $verbose_mode
+    sleep 1
     download_malware $verbose_mode
+    sleep 1
     echo -e "\n\033[1;34mPress any key to restart the Security Checks, or 'q' to quit\033[0m"
     read -s -n 1 key
     if [[ "$key" == "q" ]]; then

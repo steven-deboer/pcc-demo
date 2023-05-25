@@ -10,10 +10,10 @@ This demo is designed to showcase the power of Prisma Cloud Compute's container 
 
 ## Steps
 
-1. Start a BusyBox container in your cluster. You can do this by running the following command:
+1. Start the container in your cluster. You can do this by running the following command:
 
     ```shell
-    kubectl run -i --tty busybox-demo --image=busybox --restart=Never -- sleep infinity
+    kubectl run -i --tty pcc-demo --image=ghcr.io/steven-deboer/pcc-demo:main --restart=Never -- /bin/sh
     ```
 
 2. Next, manually relearn the container runtime model in Prisma Cloud Compute. This step is necessary to create a baseline for normal behavior within the container. 
@@ -24,16 +24,16 @@ This demo is designed to showcase the power of Prisma Cloud Compute's container 
 
 4. In Prisma Cloud Compute, create a runtime rule that alerts on any processes that deviate from the learned model. 
 
-5. Within the BusyBox container, create a new file named `security_checks.sh`. This will be the script that checks for potential security threats. Make the script executable with the following command:
+5. Within the BusyBox container, create a new file named `pcc_demo.sh`. This will be the script that checks for potential security threats. Make the script executable with the following command:
 
     ```shell
-    chmod +x security_checks.sh
+    chmod +x pcc_demo.sh
     ```
 
 6. Run the security check script:
 
     ```shell
-    ./security_checks.sh
+    ./pcc_demo.sh
     ```
 
     Wait for the script to finish running. It will execute several commands that may deviate from the learned model. Because of the runtime rule you created, Prisma Cloud Compute will alert you of these potential threats.
@@ -44,7 +44,7 @@ This demo is designed to showcase the power of Prisma Cloud Compute's container 
 
 ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/2cb33915-d991-42ee-91d3-676d80817aff)
 
-    Save the rule and start the `security_checks.sh` script again. This time, Prisma Cloud Compute will not only alert on the potential threats, but also prevent them from being carried out.
+    Save the rule and start the `pcc_demo.sh` script again. This time, Prisma Cloud Compute will not only alert on the potential threats, but also prevent them from being carried out.
 
 Please note that the exact steps to manually learn a model and create a runtime rule might vary based on the version and configuration of your Prisma Cloud Compute installation.
 

@@ -22,6 +22,8 @@ After this is done, you can continously keep running the attacks while enabling 
 
 ## Steps
 
+### Preparation
+
 1. Create a new namespace
 
     ```kubectl create ns attacker-demo-1```
@@ -32,6 +34,9 @@ After this is done, you can continously keep running the attacks while enabling 
 
 3. Next, manually relearn the container runtime model in Prisma Cloud Compute. This step is necessary to create a baseline for normal behavior within the container. In a production environment, this step is fully automated.
 
+**Warning**
+Do not forget the steps below, this is important for preparation of the demo.
+
 Go to Monitor - Runtime - Container models and find the container image. Start the manual learning.
 
 ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/80760ce7-6674-4f1c-ae58-631786e414d7)
@@ -40,11 +45,13 @@ After a few seconds, stop the manual learning.
 
 ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/026aca44-5638-4cb8-9550-1bc11816093f)
 
-3. Now, make sure that you have a runtime rule that alerts on any processes that deviate from the learned model. The scope should include our container. This rule will be used during the demo. A good starter could be to have **All other processes effect** to Alert so the attacks are not prevented when we start.
+4. Now, make sure that you have a runtime rule that alerts on any processes that deviate from the learned model. The scope should include our container. This rule will be used during the demo. A good starter could be to have **All other processes effect** to Alert so the attacks are not prevented when we start.
 
 ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/d6095ce0-ecb0-49dd-937a-63ed05860386)
 
-4. Attach to the container and run the demo script:
+### Demo
+
+1. Attach to the container and run the demo script:
 
     ```shell
     ./pcc_demo.sh
@@ -64,7 +71,7 @@ After a few seconds, stop the manual learning.
     
     <img width="652" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/fa39f3b8-765e-45a8-ba04-88bd3d3aa383">
     
-5. Now, let's change the effect of the rule from alerting to prevention for processes and domain connections outside of the model. This means that any process or connection outside of the model will not only trigger an alert, but also be stopped in its tracks.
+2. Now, let's change the effect of the rule from alerting to prevention for processes and domain connections outside of the model. This means that any process or connection outside of the model will not only trigger an alert, but also be stopped in its tracks.
 
 ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/2cb33915-d991-42ee-91d3-676d80817aff)
 

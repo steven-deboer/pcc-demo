@@ -1,6 +1,18 @@
-# Prisma Cloud Compute Container Runtime Demo with BusyBox
+# Prisma Cloud Compute Container Runtime Demo
 
 This demo is designed to showcase the power of Prisma Cloud Compute's container runtime security capabilities. 
+
+## Description
+
+We will deploy a container image that contains a script. If the script is started, it is ready to simulate an "attack", for example a zero day attack in your container environment.
+
+Prisma Cloud can protect against these zero day attacks by automatically building a container runtime model. It understands the default behaviour of the container and is able to alert on or prevent against other behaviour.
+
+If you prepare the demo environment, you start the container in a new namespace to make sure there is a new model.
+
+To speed things up, instead of the automatic building of the model we do this manually for a short time. 
+
+After this is done, you can continously keep running the attacks while enabling or disabling a specific Prisma Cloud rule or modifying the rule to show the capabilities of Prisma Cloud to prevent against these type of attacks without the need to maintain exceptions or a lot of rules.
 
 ## Prerequisites
 
@@ -10,15 +22,20 @@ This demo is designed to showcase the power of Prisma Cloud Compute's container 
 
 ## Steps
 
-1. Start the container in your cluster. You can do this by running the following command:
+1. Create a new namespace
 
-    ```shell
-    kubectl run -i --tty pcc-demo --image=ghcr.io/steven-deboer/pcc-demo:main --restart=Never -- /bin/sh
+    ```kubectl create ns attacker-demo-1```
+
+2. Start the container in your cluster. You can do this by running the following command:
+
+    ```kubectl run pcc-demo --image=ghcr.io/steven-deboer/pcc-demo:main --image-pull-policy=Always -n attacker-demo-1
     ```
 
-2. Next, manually relearn the container runtime model in Prisma Cloud Compute. This step is necessary to create a baseline for normal behavior within the container. 
+3. Next, manually relearn the container runtime model in Prisma Cloud Compute. This step is necessary to create a baseline for normal behavior within the container. 
 
-    During the relearn phase, make sure to execute the commands `clear` and `date` in the container, so that these commands are part of the learned model.
+go to Monitor - Runtime - Container models and find our container image.
+
+
 
 3. Once the model has learned enough behavior, stop the manual learning process.
 

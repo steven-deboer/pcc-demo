@@ -28,43 +28,58 @@ After this is done, you can continously keep running the attacks while enabling 
 
 2. Start the container in your cluster. You can do this by running the following command:
 
-    ```kubectl run pcc-demo --image=ghcr.io/steven-deboer/pcc-demo:main --image-pull-policy=Always -n attacker-demo-1
-    ```
+    ```kubectl run pcc-demo --image=ghcr.io/steven-deboer/pcc-demo:main --image-pull-policy=Always -n attacker-demo-1```
 
-3. Next, manually relearn the container runtime model in Prisma Cloud Compute. This step is necessary to create a baseline for normal behavior within the container. 
+3. Next, manually relearn the container runtime model in Prisma Cloud Compute. This step is necessary to create a baseline for normal behavior within the container. In a production environment, this step is fully automated.
 
-go to Monitor - Runtime - Container models and find our container image.
+Go to Monitor - Runtime - Container models and find the container image. Start the manual learning.
 
+![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/80760ce7-6674-4f1c-ae58-631786e414d7)
 
+After a few seconds, stop the manual learning. 
 
-3. Once the model has learned enough behavior, stop the manual learning process.
+![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/026aca44-5638-4cb8-9550-1bc11816093f)
 
-4. In Prisma Cloud Compute, create a runtime rule that alerts on any processes that deviate from the learned model. 
+3. Now, make sure that you have a runtime rule that alerts on any processes that deviate from the learned model. The scope should include our container. This rule will be used during the demo. A good starter could be to have **All other processes effect** to Alert so the attacks are not prevented when we start.
 
-5. Within the container, run the demo script:
+![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/d6095ce0-ecb0-49dd-937a-63ed05860386)
+
+4. Attach to the container and run the demo script:
 
     ```shell
     ./pcc_demo.sh
     ```
+    
+    You'll see the screen below:
+    
+    <img width="593" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/aa6106be-af23-4ff6-b165-e49a0f30b578">
+    
+    Press any key (except q) to run the attacks.
+    
+    Then, each attack will be executed and the results will be shown:
+    
+    <img width="638" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/0fd1cf64-ce58-4bd2-a3c0-cab41b49deb3">
 
-    Wait for the script to finish running. It will execute several commands that may deviate from the learned model. Because of the runtime rule you created, Prisma Cloud Compute will alert you of these potential threats.
-
-    This demonstrates how the container runtime model works and how it can help protect against zero day attacks with just a single rule. 
-
-6. Now, let's change the effect of the rule from alerting to prevention. This means that any process outside of the model will not only trigger an alert, but also be stopped in its tracks.
+    Use ```-v``` for more detailed results:
+    
+    <img width="652" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/fa39f3b8-765e-45a8-ba04-88bd3d3aa383">
+    
+5. Now, let's change the effect of the rule from alerting to prevention for processes and domain connections outside of the model. This means that any process or connection outside of the model will not only trigger an alert, but also be stopped in its tracks.
 
 ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/2cb33915-d991-42ee-91d3-676d80817aff)
 
-    Save the rule and start the `pcc_demo.sh` script again. This time, Prisma Cloud Compute will not only alert on the potential threats, but also prevent them from being carried out.
+![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/087e4e66-b702-48d4-ba2a-a11e9cab772b)
 
-Please note that the exact steps to manually learn a model and create a runtime rule might vary based on the version and configuration of your Prisma Cloud Compute installation.
+    Go back to the demo script and press any key again. The results will be cleared and if you again press another key, the attacks will be re-run. This time, Prisma Cloud Compute will not only alert on the potential threats, but also prevent them from being carried out.
+    
+    <img width="644" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/6b5c1aaf-af68-46eb-8784-8ad8b3759ca4">
 
+**That's it, this is how easy it is to protect your container environments against zero day attacks with Prisma Cloud!**
 
-## Screenshots
+## Optional
 
-<img width="710" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/e831d1d8-1842-44fd-900e-f5403906dc8d">
+Add an integration like the Slack integration show alerts coming in in real time. Example:
 
-<img width="703" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/9e37dbfd-de45-4a63-b3ea-1fc3835c1ecf">
+<img width="677" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/85eafa11-9d3a-4e1b-8f8d-58f4f81b4971">
 
-
-
+    

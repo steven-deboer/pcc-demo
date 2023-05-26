@@ -76,7 +76,7 @@ Do not forget the steps below, these is important for preparation of the demo.
 
     Go back to the demo script and press any key again. The results will be cleared and if you again press another key, the attacks will be re-run. This time, Prisma Cloud Compute will not only alert on the potential threats, but also prevent them from being carried out.
     
-    ![image](https://github.com/steven-deboer/pcc-demo/assets/96180461/6b5c1aaf-af68-46eb-8784-8ad8b3759ca4>
+ <img width="613" alt="image" src="https://github.com/steven-deboer/pcc-demo/assets/96180461/252b99d8-8f0f-4ad4-bbc6-068384253f03">
 
 **That's it, this is how easy it is to protect your container environments against zero day attacks with Prisma Cloud!**
 

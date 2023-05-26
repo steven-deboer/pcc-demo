@@ -34,7 +34,7 @@ After this is done, you can continously keep running the attacks while enabling 
 
 3. Next, manually relearn the container runtime model in Prisma Cloud Compute. This step is necessary to create a baseline for normal behavior within the container. In a production environment, this step is fully automated.
 
-**Warning**
+:warning:**Warning**
 Do not forget the steps below, this is important for preparation of the demo.
 
 Go to Monitor - Runtime - Container models and find the container image. Start the manual learning.

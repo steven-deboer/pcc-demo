@@ -51,7 +51,9 @@ Do not forget the steps below, these is important for preparation of the demo.
 1. Attach to the container and run the demo script:
 
     ```shell
-    ./pcc_demo.sh
+    % kubectl exec -it pcc-demo -n attacker-demo-1 -- sh
+    / #
+    / #./pcc_demo.sh
     ```
     
     You'll see the screen below:

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pcc-demo
+  namespace: attacker-demo-1
+  labels:
+    app.kubernetes.io/name: pcc-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: pcc-demo
+  template:
+    metadata:
+      labels:
+        run: pcc-demo
+        app.kubernetes.io/name: pcc-demo
+      annotations:
+        policy.cilium.io/proxy-visibility: "<Egress/53/UDP/DNS>,<Egress/80/TCP/HTTP>"
+        io.kubernetes.pod.name: "pcc-demo"
+        io.cilium.k8s.namespace.labels: "app=pcc-demo"
+    spec:
+      containers:
+      - name: pcc-demo
+        image: ghcr.io/steven-deboer/pcc-demo:main
+        imagePullPolicy: Always

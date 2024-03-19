@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: attacker-demo-1
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,9 +21,7 @@ spec:
         run: pcc-demo
         app.kubernetes.io/name: pcc-demo
       annotations:
-        policy.cilium.io/proxy-visibility: "<Egress/53/UDP/DNS>,<Egress/80/TCP/HTTP>"
         io.kubernetes.pod.name: "pcc-demo"
-        io.cilium.k8s.namespace.labels: "app=pcc-demo"
     spec:
       containers:
       - name: pcc-demo
